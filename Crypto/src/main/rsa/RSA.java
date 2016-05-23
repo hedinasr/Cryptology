@@ -13,6 +13,9 @@ import java.util.Random;
  */
 public class RSA extends Cryptosystem {
 
+    private Key secretKey;
+
+    private Key publicKey;
 
     /**
      * Generate public and private key
@@ -35,8 +38,8 @@ public class RSA extends Cryptosystem {
         BigInteger d = e.modInverse(phi);
         BigInteger N = p.multiply(q);
 
-        secretKey.setKey(new ArrayList<>(Arrays.asList(d, p, q)));
-        publicKey.setKey(new ArrayList<>(Arrays.asList(e, N)));
+        secretKey = new Key(new ArrayList<>(Arrays.asList(d, p, q)));
+        publicKey = new Key(new ArrayList<>(Arrays.asList(e, N)));
     }
 
     /**
@@ -58,7 +61,7 @@ public class RSA extends Cryptosystem {
      */
     @Override
     public BigInteger Decrypt(BigInteger encrypted, Key secretKey) {
-        return encrypted.modPow(secretKey.getKey().get(0), publicKey.getKey().get(1).multiply(publicKey.getKey().get(2)));
+        return encrypted.modPow(secretKey.getKey().get(0), secretKey.getKey().get(1).multiply(secretKey.getKey().get(2)));
     }
 
     /**
@@ -82,5 +85,13 @@ public class RSA extends Cryptosystem {
         BigInteger mq = cq.modPow(dq, q);
 
         return ((q.multiply(mp).multiply(q.modInverse(p))).add(p.multiply(mq).multiply(p.modInverse(q)))).mod(p.multiply(q));
+    }
+
+    public Key getPublicKey() {
+        return publicKey;
+    }
+
+    public Key getSecretKey() {
+        return secretKey;
     }
 }

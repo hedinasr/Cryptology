@@ -7,16 +7,18 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Elgamal encryption.
+ * Security of the ElGamal algorithm depends on the difficulty of computing discrete logs
+ * in a large prime modulus
+ * 
  * - Theorem 1 : a in [Z/Z[p]] then a^(p-1) [p] = 1
  * - Theorem 2 : the order of an element split the order group
  */
-public class Elgamal {
+public class ElGamal {
 
     public static BigInteger TWO = new BigInteger("2");
 
     /**
-     * Generate the public key and the secret key for the Elgamal encryption.
+     * Generate the public key and the secret key for the ElGamal encryption.
      *
      * @param n key size
      */
@@ -25,10 +27,10 @@ public class Elgamal {
         BigInteger p = getPrime(n, 40, new Random());
         // (b) take a random element in [Z/Z[p]]* (p' order)
         BigInteger g = randNum(p, new Random());
-        BigInteger pPrime = p.subtract(BigInteger.ONE).divide(Elgamal.TWO);
+        BigInteger pPrime = p.subtract(BigInteger.ONE).divide(ElGamal.TWO);
 
         while (!g.modPow(pPrime, p).equals(BigInteger.ONE)) {
-            if (g.modPow(pPrime.multiply(Elgamal.TWO), p).equals(BigInteger.ONE))
+            if (g.modPow(pPrime.multiply(ElGamal.TWO), p).equals(BigInteger.ONE))
                 g = g.modPow(TWO, p);
             else
                 g = randNum(p, new Random());
@@ -45,13 +47,13 @@ public class Elgamal {
     }
 
     /**
-     * Encrypt Elgamal
+     * Encrypt ElGamal
      *
      * @param (p,g,h) public key
      * @param message message
      */
     public static List<BigInteger> Encrypt(BigInteger p, BigInteger g, BigInteger h, BigInteger message) {
-        BigInteger pPrime = p.subtract(BigInteger.ONE).divide(Elgamal.TWO);
+        BigInteger pPrime = p.subtract(BigInteger.ONE).divide(ElGamal.TWO);
         // TODO [0, N -1] or [1, N-1] ?
         BigInteger r = randNum(pPrime, new Random());
         // encrypt couple (g^r, m * h^r)
@@ -59,7 +61,7 @@ public class Elgamal {
     }
 
     /**
-     * Decrypt Elgamal
+     * Decrypt ElGamal
      *
      * @param (p,x) secret key
      * @param (gr,mhr) (g^r, m * h^r)

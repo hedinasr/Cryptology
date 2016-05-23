@@ -6,9 +6,7 @@ import java.math.BigInteger;
 
 public abstract class Cryptosystem {
 
-    protected Key secretKey;
-
-    protected Key publicKey;
+    // TODO add public & secret key here (?)
 
     public abstract void KeyGen(int modulus);
 

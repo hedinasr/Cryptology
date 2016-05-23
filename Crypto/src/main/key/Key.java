@@ -3,9 +3,13 @@ package key;
 import java.math.BigInteger;
 import java.util.List;
 
-public abstract class Key {
+public class Key {
 
     protected List<BigInteger> key;
+
+    public Key(List<BigInteger> key) {
+        this.key = key;
+    }
 
     public List<BigInteger> getKey() {
         return key;

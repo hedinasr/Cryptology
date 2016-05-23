@@ -1,0 +1,20 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:nil d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
+#+OPTIONS: title:t toc:t todo:t |:t
+#+TITLE: Cryptology
+#+DATE: <2016-05-23 Mon>
+#+AUTHOR: hedi nasr
+#+EMAIL: hedi.nasr@etu.univ-lyon1.fr
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 24.5.1 (Org mode 8.3.4)
+
+* Cryptosystem
+Java implementation of RSA & ElGamal cryptosystems
+** RSA
+Security of RSA depends on the difficulty of factoring large integers.
+** ElGamal
+Security of the ElGamal algorithm depends on the difficulty of computing discrete logs
+in a large prime modulus
