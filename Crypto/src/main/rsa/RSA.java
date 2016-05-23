@@ -1,43 +1,53 @@
 package rsa;
 
+import key.Cryptosystem;
+import key.Key;
+
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
-public class RSA {
+/**
+ * Security of RSA depends on the difficulty of factoring large integers.
+ */
+public class RSA extends Cryptosystem {
 
-    private BigInteger privateKey;
-    private BigInteger publicKey;
-    private BigInteger modulus;
 
     /**
      * Generate public and private key
      * return (d, p, q) & (e, N)
      *
-     * @param lambda key size
+     * @param modulus key size
      */
-    public void KeyGen(int lambda) {
-        // Generate two random big integer (size = lambda)
-        BigInteger p = new BigInteger(lambda, 40, new Random());
-        BigInteger q = new BigInteger(lambda, 40, new Random());
+    @Override
+    public void KeyGen(int modulus) {
+        BigInteger p = new BigInteger(modulus, 40, new Random());
+        BigInteger q = new BigInteger(modulus, 40, new Random());
         BigInteger phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
 
-        do {
-            publicKey = new BigInteger(phi.bitLength(), new Random());
-        } while (!publicKey.gcd(phi).equals(BigInteger.ONE));
+        BigInteger e = new BigInteger(phi.bitLength(), new Random());
 
+        while (!e.gcd(phi).equals(BigInteger.ONE)) {
+            e = new BigInteger(phi.bitLength(), new Random());
+        }
 
-        modulus = p.multiply(q);
-        privateKey = publicKey.modInverse(phi);
+        BigInteger d = e.modInverse(phi);
+        BigInteger N = p.multiply(q);
+
+        secretKey.setKey(new ArrayList<>(Arrays.asList(d, p, q)));
+        publicKey.setKey(new ArrayList<>(Arrays.asList(e, N)));
     }
 
     /**
      * Encrypt the message
      *
-     * @param message message to encrypt
+     * @param message BigInteger message to encrypt
      * @return the encrypted message
      */
-    public BigInteger Encrypt(BigInteger message) {
-        return message.modPow(publicKey, modulus);
+    @Override
+    public BigInteger Encrypt(BigInteger message, Key publicKey) {
+        return message.modPow(publicKey.getKey().get(0), publicKey.getKey().get(1));
     }
 
     /**
@@ -46,27 +56,31 @@ public class RSA {
      * @param encrypted encrypted message to decrypt
      * @return the decrypted message
      */
-    public BigInteger Decrypt(BigInteger encrypted) {
-        return encrypted.modPow(privateKey, modulus);
+    @Override
+    public BigInteger Decrypt(BigInteger encrypted, Key secretKey) {
+        return encrypted.modPow(secretKey.getKey().get(0), publicKey.getKey().get(1).multiply(publicKey.getKey().get(2)));
     }
 
     /**
      * Decrypt the message with CRT algorithm
      *
-     * @param (d,p,q) secret key for decrypt
-     * @param message encrypted message
+     * @param encrypted encrypted message
+     * @param secretKey key for decrypt
      * @return decrypted message
      */
-    public static BigInteger Decrypt_CRT(BigInteger d,
-                                         BigInteger p,
-                                         BigInteger q,
-                                         BigInteger message) {
-        BigInteger cp = message.mod(p);
-        BigInteger cq = message.mod(q);
+    public static BigInteger Decrypt_CRT(BigInteger encrypted,
+                                         Key secretKey) {
+        BigInteger d = secretKey.getKey().get(0);
+        BigInteger p = secretKey.getKey().get(1);
+        BigInteger q = secretKey.getKey().get(2);
+
+        BigInteger cp = encrypted.mod(p);
+        BigInteger cq = encrypted.mod(q);
         BigInteger dp = d.mod(p.subtract(BigInteger.ONE));
         BigInteger dq = d.mod(q.subtract(BigInteger.ONE));
         BigInteger mp = cp.modPow(dp, p);
         BigInteger mq = cq.modPow(dq, q);
+
         return ((q.multiply(mp).multiply(q.modInverse(p))).add(p.multiply(mq).multiply(p.modInverse(q)))).mod(p.multiply(q));
     }
 }
