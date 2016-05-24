@@ -9,11 +9,11 @@ import java.util.Random;
 /**
  * Security of the ElGamal algorithm depends on the difficulty of computing discrete logs
  * in a large prime modulus
- * 
+ *
  * - Theorem 1 : a in [Z/Z[p]] then a^(p-1) [p] = 1
  * - Theorem 2 : the order of an element split the order group
  */
-public class ElGamal {
+public final class ElGamal { // TODO extends Cryptosystem
 
     public static BigInteger TWO = new BigInteger("2");
 
