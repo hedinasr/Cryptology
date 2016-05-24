@@ -59,8 +59,8 @@ Security of RSA depends on the difficulty of factoring large integers.
 
 <tbody>
 <tr>
-<td class="org-left">(*N*, *e*)</td>
-<td class="org-left">(*d*, *p*, *q*)</td>
+<td class="org-left">(N, e)</td>
+<td class="org-left">(d, p, q)</td>
 </tr>
 </tbody>
 </table>
@@ -106,8 +106,8 @@ in a large prime modulus
 
 <tbody>
 <tr>
-<td class="org-left">(*p*, *g*, *h*)</td>
-<td class="org-left">(*p*, *x*)</td>
+<td class="org-left">(p, g, h)</td>
+<td class="org-left">(p, x)</td>
 </tr>
 </tbody>
 </table>

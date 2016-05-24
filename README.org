@@ -23,9 +23,9 @@ Security of RSA depends on the difficulty of factoring large integers.
 4. Choose e in (Z/_{φ(N)}Z)^* and compute /d/ as :
    + /ed/ ≡ 1 (mod φ(/N/))
 
-| public key | secret key      |
-|------------+-----------------|
-| (/N/, /e/) | (/d/, /p/, /q/) |
+| public key | secret key |
+|------------+------------|
+| (N, e)     | (d, p, q)  |
 
 *** Encrypt
 A message /m/ is in Z/_{N}Z (the size of the message is less or equal to the size key)
@@ -48,9 +48,9 @@ in a large prime modulus
 3. Choose a random integer /x/ in [0, /p/' - 1]
 4. Compute /h/ = g^x in Z/_{p}Z
 
-| public key      | secret key |
-|-----------------+------------|
-| (/p/, /g/, /h/) | (/p/, /x/) |
+| public key | secret key |
+|-----------+--------|
+| (p, g, h) | (p, x) |
 
 *** Encrypt
 1. Choose a random /r/ in [1, /p/' - 1]
