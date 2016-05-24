@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Security of RSA depends on the difficulty of factoring large integers.
  */
-public class RSA extends Cryptosystem {
+public final class RSA extends Cryptosystem {
 
     private Key secretKey;
 
