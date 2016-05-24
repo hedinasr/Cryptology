@@ -15,6 +15,51 @@
 Java implementation of RSA & ElGamal cryptosystems
 ** RSA
 Security of RSA depends on the difficulty of factoring large integers.
+*** Key generation
+1. Choose the size key (integer)
+2. Construct two random prime integer /p/ and /q/ as :
+   + 2^{[k/2]-1} ≤ /p/, /q/ ≤ 2^{[k/2]-1} - 1   
+3. N = p * q
+4. Choose e in (Z/_{φ(N)}Z)^* and compute /d/ as :
+   + /ed/ ≡ 1 (mod φ(/N/))
+
+| public key | secret key      |
+|------------+-----------------|
+| (/N/, /e/) | (/d/, /p/, /q/) |
+
+*** Encrypt
+A message /m/ is in Z/_{N}Z (the size of the message is less or equal to the size key)
+
++ Alice has the public key (/N/, /e/) 
++ /c/ = m^{e} (mod /n/)
+
+*** Decrypt
+
++ Bob has the private key (/d/, /p/, /q/)
++ c^d (mod /N/) = /m/
+
 ** ElGamal
 Security of the ElGamal algorithm depends on the difficulty of computing discrete logs
 in a large prime modulus
+
+*** Key generation
+1. Choose a random prime integer /p/ as /p/ = 2 /p/' + 1 with /p/' is prime
+2. Choose a random integer in (Z/_{p}Z)^* of order /p/'
+3. Choose a random integer /x/ in [0, /p/' - 1]
+4. Compute /h/ = g^x in Z/_{p}Z
+
+| public key      | secret key |
+|-----------------+------------|
+| (/p/, /g/, /h/) | (/p/, /x/) |
+
+*** Encrypt
+1. Choose a random /r/ in [1, /p/' - 1]
+2. The encrypted message is (g^r, m*h^r)
+
+*** Decrypt
++ Entry : (g^r, m*h^r)
+  + h = g^x [fn:1]
+  + (g^r)^x = (g^x)^r = h^r
+  + message = m*h^r/h^r
+
+[fn:1] Cf. 4. of Key generation
