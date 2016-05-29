@@ -18,6 +18,8 @@ public class ElGamalTest {
         BigInteger g = ElGamal.randNum(p, new Random());
         BigInteger pPrime = p.subtract(BigInteger.ONE).divide(ElGamal.TWO);
 
+        System.out.println(pPrime.isProbablePrime(40));
+
         System.out.println("g^2 % p = " + g.modPow(ElGamal.TWO, p));
         System.out.println("g^p' % p = " + g.modPow(pPrime, p));
         System.out.println("g^(2p') % p = " + g.modPow(pPrime.multiply(ElGamal.TWO), p));
