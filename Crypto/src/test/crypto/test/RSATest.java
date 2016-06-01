@@ -52,7 +52,7 @@ public class RSATest {
         // generate c & c'
         BigInteger c = rsa.Encrypt(m, myPublicKey);
         BigInteger c_prime = rsa.Encrypt(m_prime, myPublicKey);
-        BigInteger c_prod = rsa.Encrypt(m_prod, my  sPublicKey);
+        BigInteger c_prod = rsa.Encrypt(m_prod, myPublicKey);
 
         BigInteger cypher = c.multiply(c_prime);
 
