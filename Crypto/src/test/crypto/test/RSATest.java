@@ -5,6 +5,7 @@ import org.junit.Test;
 import rsa.RSA;
 
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Random;
 
 import static org.junit.Assert.*;
