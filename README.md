@@ -71,7 +71,7 @@ Security of RSA depends on the difficulty of factoring large integers.
 A message *m* is in Z/<sub>N</sub>Z (the size of the message is less or equal to the size key)
 
 -   Alice has the public key (*N*, *e*)
--   *c* = m<sup>e</sup> (mod *n*)
+-   *c* = m<sup>e</sup> (mod *N*)
 
 ### Decryption<a id="orgheadline3"></a>
 
